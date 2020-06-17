@@ -18,6 +18,9 @@ NEWSPIDER_MODULE = 'tripadvisor.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'tripadvisor (+http://www.yourdomain.com)'
 
+# Configuração para UTF-8
+FEED_EXPORT_ENCONDING = 'UTF-8'
+
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
