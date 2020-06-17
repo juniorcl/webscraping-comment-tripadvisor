@@ -14,5 +14,5 @@ class TripadvisorItem(scrapy.Item):
     autor_comentario = scrapy.Field()
     autor_endereco = scrapy.Field()
     comentario_titulo = scrapy.Field()
-    comantario_corpo = scrapy.Field()
+    comentario_corpo = scrapy.Field()
     comentario_data = scrapy.Field()
