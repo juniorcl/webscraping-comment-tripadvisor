@@ -13,7 +13,7 @@ class ComentarioSpider(scrapy.Spider):
         
         for quadro in quadros_de_comentarios:
             item['autor_comentario'] = quadro.xpath(".//div[@class='social-member-event-MemberEventOnObjectBlock__event_type--3njyv']/span/a/text()").get() #seleciona o autor de cada quadro
-            item['autor_endereco'] = quadro.xpath("") #o endereço da pessoa na página
+            item['autor_endereco'] = quadro.xpath(".//span[@class='default social-member-common-MemberHometown__hometown--3kM9S small']/text()") #o endereço da pessoa na página
             item['comentario_titulo'] = quadro.xpath("") #o título do comentario
             item['comentario_corpo'] = quadro.xpath("") #o corpo do comentario
             item['comentario_data'] = quadro.xpath("") #retira a data da experiência
