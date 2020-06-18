@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'tripadvisor.spiders'
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36'
 
 # Configuração para UTF-8
-FEED_EXPORT_ENCONDING = 'UTF-8'
+FEED_EXPORT_ENCODING = 'UTF-8'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True

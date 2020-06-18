@@ -23,6 +23,6 @@ class ComentarioSpider(scrapy.Spider):
 
         #Abaixo é adicionado o link para prosseguir para a próxima página. E se for verdade, então
         #entra no if para seguir para a próxima página e chama o método parse da classe novamente.
-        next_page = response.xpath("//a[@class='ui_button nav next primary ' and text()='Próximas']/@href")
+        next_page = response.xpath("//a[@class='ui_button nav next primary ' and text()='Próximas']/@href").get()
         if next_page:
             yield response.follow(url=next_page, callback=self.parse)
