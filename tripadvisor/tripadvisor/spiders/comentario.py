@@ -1,28 +1,26 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from ..items import TripadvisorItem #importa a classe de dentro do items.py
+from ..items import TripadvisorItem #import the class inside the item.py
 
 class ComentarioSpider(scrapy.Spider):
-    name = 'comentario' #nome da aranha que estou utilziando
-    allowed_domains = ['tripadvisor.com.br'] #os domínios do site
-    start_urls = ['https://www.tripadvisor.com.br/Attraction_Review-g303441-d553398-Reviews-Parque_Barigui-Curitiba_State_of_Parana.html#REVIEWS'] #link da página onde pegaremos os comentários
+    name = 'comentario' #the name of the spider
+    allowed_domains = ['tripadvisor.com.br'] #the site domain
+    start_urls = ['https://www.tripadvisor.com.br/Attraction_Review-g303441-d553398-Reviews-Parque_Barigui-Curitiba_State_of_Parana.html#REVIEWS'] #link of the page where the comments will be taken.
 
     def parse(self, response):
-        item = TripadvisorItem() #chama o TripadvisorItem definido no comentario.py
-        quadros_de_comentarios = response.xpath("//div[@class='location-review-card-Card__ui_card--2Mri0 location-review-card-Card__card--o3LVm location-review-card-Card__section--NiAcw']") #selciona todos os quadros de comentarios.
+        item = TripadvisorItem() #It calls the TripadvisorItem defined into comentario.py
+        comment_frames = response.xpath("//div[@class='location-review-card-Card__ui_card--2Mri0 location-review-card-Card__card--o3LVm location-review-card-Card__section--NiAcw']") #It selects all the commentaries boxes.
         
-        #Passa por cada comentário (quadro) definido dentro dos quadros de comentários
-        #definido anteriormente.
-        for quadro in quadros_de_comentarios:
-            item['autor_comentario'] = quadro.xpath(".//div[@class='social-member-event-MemberEventOnObjectBlock__event_type--3njyv']/span/a/text()").get() #seleciona o autor de cada quadro
-            item['autor_endereco'] = quadro.xpath(".//span[@class='default social-member-common-MemberHometown__hometown--3kM9S small']/text()").get() #o endereço da pessoa na página
-            item['comentario_titulo'] = quadro.xpath(".//div[@class='location-review-review-list-parts-ReviewTitle__reviewTitle--2GO9Z']/a//span/text()").get() #o título do comentario
-            item['comentario_corpo'] = quadro.xpath(".//div[@class='cPQsENeY']/q/span/text()").get() #o corpo do comentario
-            item['comentario_data'] = quadro.xpath(".//span[@class='location-review-review-list-parts-EventDate__event_date--1epHa']/text()").get() #retira a data da experiência
+        #this goes through each comment (frames) defined within the comment frames defined previously.
+        for frame in comment_frames:
+            item['author_comment'] = frame.xpath(".//div[@class='social-member-event-MemberEventOnObjectBlock__event_type--3njyv']/span/a/text()").get()
+            item['author_address'] = frame.xpath(".//span[@class='default social-member-common-MemberHometown__hometown--3kM9S small']/text()").get()
+            item['comment_title'] = frame.xpath(".//div[@class='location-review-review-list-parts-ReviewTitle__reviewTitle--2GO9Z']/a//span/text()").get()
+            item['comment_body'] = frame.xpath(".//div[@class='cPQsENeY']/q/span/text()").get()
+            item['comment_data'] = frame.xpath(".//span[@class='location-review-review-list-parts-EventDate__event_date--1epHa']/text()").get()
             yield item
 
-        #Abaixo é adicionado o link para prosseguir para a próxima página. E se for verdade, então
-        #entra no if para seguir para a próxima página e chama o método parse da classe novamente.
+        #Below is added the link to proceed to the next page. And if that's true, then enter the 'if' to proceed to the next page and call the class's parse method again.
         next_page = response.xpath("//a[@class='ui_button nav next primary ' and text()='Próximas']/@href").get()
         if next_page:
             yield response.follow(url=next_page, callback=self.parse)
