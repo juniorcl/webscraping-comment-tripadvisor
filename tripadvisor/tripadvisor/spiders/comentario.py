@@ -11,7 +11,7 @@ class ComentarioSpider(scrapy.Spider):
         item = TripadvisorItem() #It calls the TripadvisorItem defined into comentario.py
         comment_frames = response.xpath("//div[@class='location-review-card-Card__ui_card--2Mri0 location-review-card-Card__card--o3LVm location-review-card-Card__section--NiAcw']") #It selects all the commentaries boxes.
         
-        #this goes through each comment (frames) defined within the comment frames defined previously.
+        #This goes through each comment (frames) defined within the comment frames defined previously.
         for frame in comment_frames:
             item['author_comment'] = frame.xpath(".//div[@class='social-member-event-MemberEventOnObjectBlock__event_type--3njyv']/span/a/text()").get()
             item['author_address'] = frame.xpath(".//span[@class='default social-member-common-MemberHometown__hometown--3kM9S small']/text()").get()

@@ -11,6 +11,8 @@ import scrapy
 class TripadvisorItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
+
+    #fields
     author_comment = scrapy.Field()
     author_address = scrapy.Field()
     comment_title = scrapy.Field()
